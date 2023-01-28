@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos produits{% endblock %}
+
+{% block body %}
+
+<div class="row" style="margin-top:30px">
+
+    <div class="col-md-12">
+     <h3 class="text-center">Nos Produits</h3>
+        <div class="row">
+            {% for product in produits %}
+                <div class="col-md-4">
+                    <div class="product-item">
+                      <a href="{{ path('produit_show', {id: product.id}) }}">  <img class="img-fluid" src="/uploads/images/{{product.image}}" alt="{{product.nom}}"></a>
+                        <h5 class="mt-2">{{ product.nom}} {% if is_granted('ROLE_ADMIN') %} <a href="{{ path('Supprimer_Produit', {id: product.id}) }}" class="btn primary " data-target="modal-delete" data-id="{{product.id}}" data-titre="{{product.nom}}"><i class="bi bi-trash3-fill" ></i></a{% endif %}></h5>
+                        <span class="product-subtitle text-center">{{product.description}}</span>
+                        <span class="product-price text-center">{{product.pu}} € </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div> 
+    </div>
+</div>
+ 
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte {% endblock %}
+
+{% block body %}
+    <h2  style="margin-top:30px">Mon compte</h2>
+    Bienvenue dans votre espace membre {{ app.user.firstname }}.
+    <hr>
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <div class="list-group"  style="margin-top:30px">
+        {% if is_granted('ROLE_ADMIN') %}
+  
+       <a href="{{ path('orders') }}" class="list-group-item list-group-item-action">
+            Les commandes
+        </a>
+        <a href="{{ path('ajouter_produit') }}" class="list-group-item list-group-item-action">
+            Ajouter Produit
+        </a>
+        
+        {% endif %}
+         <a href="{{ path('account_orders') }}" class="list-group-item list-group-item-action">
+            Mes commandes
+        </a>
+       
+        
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes - La Boot'Ique'{% endblock %}
+
+{% block body %}
+<br><br>
+<a  class="btn btn-outline-success" href="{{ path('order_to_csv') }}" style="margin-top: 20px;margin-left: 20px;margin-bottom: 20px">Exporter CSV</a>
+    <h2>Voir tous Les commandes</h2>
+    {% if orders %}
+        
+                {% for order in orders %}
+                <h4> Commande n° {{order.reference}}</h4>
+                <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">Articles</th>      
+                    <th scope="col">Total</th>
+                    <th scope="col">Passée le </th>
+                    <th scope="col">Référence</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>{{order.totalQuantity}}</td>  
+                        <td>{{((order.prixAvecTva + order.total) )|number_format(2,',','.') }} €</td>
+                        <td>{{order.createdAt|date('d/m/Y')}}</td>
+                        <td><span class="badge badge-secondary">{{order.reference}}</span></td>
+                    
+                          <table class="table mt-4">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Numero </th>                                   
+                                        <th scope="col">Quantite</th>
+                                        <th scope="col">Nom de Prodit</th>
+                                        <th scope="col">Prix unitaire</th>
+                                        
+                                    </tr>
+
+                                    </thead>
+                                         <tbody>
+                                            {% for LC in  order.ligneCommandes %}
+                                            <tr> 
+                                                <td> {{ LC.id }} </td>
+                                                <td> {{ LC.quantite }}</td>
+                                                <td>  {{ LC.Produit.nom}}</td>
+                                                <td> {{ ( LC.Produit.pu)|number_format(2,',','.') }} €</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                            </table>
+                    </tr>
+                    </tbody>
+        </table>
+                {% endfor %}
+            
+    {% else %}
+        <p>Vous n'avez effectué aucune commande pour le moment.</p>        
+    {% endif %}
+    <a title="Retour vers votre espace membres"href="{{ path('app_account') }}">Retourner à mon compte</a>
+{% endblock %}

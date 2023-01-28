@@ -1,0 +1,15 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}Modifier Produit{% endblock %}
+
+{% block body %}
+<br><br><br>
+{{ form_start(form)}}
+ 
+     {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success btn-lg btn-block" >Modifier </button>
+
+
+{{ form_end(form)}}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma commande -Chez cha'cha{% endblock %}
+
+{% block body %}
+<div style="margin-top:30px" >
+    <h2  >Commande n° {{order.reference}}</h2>
+    <hr>
+    <p>
+        <b>Commande passée le :</b> {{order.createdAt|date('d/m/Y')}} <br>
+        <b>Statut:</b> {{
+            order.state == 1 ? 'Paiment accepté' :
+            order.state == 2 ? 'En préparation' : 'Expédiée'
+        }}<br>
+        <b>Référence : </b><span>{{order.reference}}</span><br>
+        
+    </p>
+    <table class="table mt-4">
+    <thead>
+        <tr>
+            <th scope="col">Article</th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Prix unitaire </th>
+            <th scope="col">Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for LC in order.ligneCommandes %}
+            <tr>
+            <td>{{LC.Produit.nom}}</td>
+                <td>{{LC.quantite}}</td>
+                <td>{{(LC.Produit.pu )|number_format(2,',','.') }} €</td>
+               <td>{{(LC.getTotalLignecommane)|number_format(2,',','.') }} €</td>
+            </tr>  
+        {% endfor %}
+            <tr>
+                <th>Sous-total</th>
+                <td></td>
+                <td></td>
+                <td>{{(order.total)|number_format(2,',','.') }} €</td>
+            </tr>
+    </tbody>
+</table>
+    <div class="text-right">
+       
+        <b>Total : </b> {{((order.prixAvecTva + order.total) )|number_format(2,',','.') }} €
+    </div>
+    <a title="Retour vers votre espace membres"href="{{ path('app_account') }}">Retourner à mon compte</a>
+    </div>
+{% endblock %}
